@@ -1,10 +1,8 @@
 package com.bank.dao;
 
 import java.util.HashMap;
-import java.util.Map;
 
 import com.bank.entity.Account;
-import com.bank.flow.console.ConsoleExtras;
 
 public class DollarsBankDao {
 
@@ -33,18 +31,6 @@ public class DollarsBankDao {
 	public static Account getAccount(String userId, String password) {
 		Account account = accounts.get(userId);
 		
-//		// START DEBUG CODE
-//		System.out.println(ConsoleExtras.ANSI_CYAN + "getAccount called for " + userId + " | " + password + ConsoleExtras.ANSI_RESET);
-//		System.out.println("\t" + ConsoleExtras.ANSI_CYAN + "Accounts:" + ConsoleExtras.ANSI_RESET);
-//		for(Map.Entry<String, Account> it : accounts.entrySet())
-//			System.out.println("\t\t" + ConsoleExtras.ANSI_CYAN + it.getKey() + " | " + it.getValue().getPassword() + ConsoleExtras.ANSI_RESET);
-//		
-//		if(account == null)
-//			System.out.println("\t" + ConsoleExtras.ANSI_RED + "NO ACCOUNT FOUND" + ConsoleExtras.ANSI_RESET);
-//		else
-//			System.out.println("\t" + ConsoleExtras.ANSI_GREEN + "Found account: " + userId + " | " + password + ConsoleExtras.ANSI_RESET);
-//		// END DEBUG CODE
-		
 		if((account != null) && (account.correctPassword(password)))
 			return account;
 		
@@ -58,7 +44,7 @@ public class DollarsBankDao {
 	
 	public static boolean withdraw(Account acc, long amount) {
 		if(validateTransaction(acc, amount)) {
-			acc.addAmount(amount, "local withdrawal");
+			acc.subtractAmount(amount, "local withdrawal");
 			return true;
 		}
 		return false;
