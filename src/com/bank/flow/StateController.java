@@ -10,6 +10,10 @@ public class StateController {
 	private State nextState = null;
 	private Object passedData = null;
 	
+	public StateController() {
+		states = new HashMap<String, State>();
+	}
+	
 	public void addState(State state) {
 		states.put(state.getName(), state);
 		state.controller = this;
@@ -26,6 +30,7 @@ public class StateController {
 	
 	public void start(String startStateName) {
 		curState = states.get(startStateName);
+		curState.start(null);
 		run();
 	}
 	

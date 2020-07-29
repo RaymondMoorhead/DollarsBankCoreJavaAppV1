@@ -31,24 +31,24 @@ public class NewAccountState extends State{
 		switch(subState) {
 			case 0:
 				System.out.println("Customer Name:" + ConsoleExtras.ANSI_GREEN);
-				if(input.hasNext()) {
-					newAcc.setName(input.next());
+				if(input.hasNextLine()) {
+					newAcc.setName(input.nextLine());
 					++subState;
 				}
 				System.out.print(ConsoleExtras.ANSI_RESET);
 				break;
 			case 1:
 				System.out.println("Customer Address:" + ConsoleExtras.ANSI_GREEN);
-				if(input.hasNext()) {
-					newAcc.setAddress(input.next());
+				if(input.hasNextLine()) {
+					newAcc.setAddress(input.nextLine());
 					++subState;
 				}
 				System.out.print(ConsoleExtras.ANSI_RESET);
 				break;
 			case 2:
 				System.out.println("Customer Contact Number:" + ConsoleExtras.ANSI_GREEN);
-				if(input.hasNext()) {
-					String phone = input.next();
+				if(input.hasNextLine()) {
+					String phone = input.nextLine();
 					if(Account.validPhone(phone)) {
 						newAcc.setContactNumber(phone);
 						++subState;
@@ -60,8 +60,8 @@ public class NewAccountState extends State{
 				break;
 			case 3:
 				System.out.println("User Id :" + ConsoleExtras.ANSI_GREEN);
-				if(input.hasNext()) {
-					String id = input.next();
+				if(input.hasNextLine()) {
+					String id = input.nextLine();
 					if(DollarsBankDao.idIsUnique(id)) {
 						newAcc.setUserId(id);
 						++subState;
@@ -73,11 +73,11 @@ public class NewAccountState extends State{
 				break;
 			case 4:
 				System.out.println("Password : 8 Characters With Lower, Upper & Special" + ConsoleExtras.ANSI_GREEN);
-				if(input.hasNext()) {
-					String pass = input.next();
+				if(input.hasNextLine()) {
+					String pass = input.nextLine();
 					String error = Account.validPassword(pass);
 					if(error == null) {
-						newAcc.setUserId(pass);
+						newAcc.setPassword(pass);
 						++subState;
 					}
 					else
@@ -87,8 +87,8 @@ public class NewAccountState extends State{
 				break;
 			case 5:
 				System.out.println("Initial Deposite Amount:" + ConsoleExtras.ANSI_GREEN);
-				if(input.hasNext()) {
-					String num = input.next();
+				if(input.hasNextLine()) {
+					String num = input.nextLine();
 					if(ConsoleExtras.validAmount(num)) {
 						newAcc.addAmount(ConsoleExtras.parseAmount(num), "Initial Balance");
 						this.controller.changeState("WelcomeCustomerState", newAcc);

@@ -35,11 +35,11 @@ public class ConsoleExtras {
 	public static long parseAmount(String num) {
 
 		int decimal = num.indexOf('.');
-		int startIndex = (num.indexOf('$') != -1 ? 0 : 1);
+		int startIndex = (num.indexOf('$') == -1 ? 0 : 1);
 		long amount;
 		
 		if(decimal == -1)
-			amount = Long.parseLong(num.substring(startIndex));
+			amount = Long.parseLong(num.substring(startIndex)) * 100;
 		else {
 			String beforeDecimal = num.substring(startIndex,  decimal);
 			String afterDecimal = num.substring(decimal + 1);
@@ -58,7 +58,7 @@ public class ConsoleExtras {
 		if(result.length() <= 2)
 			return "0." + result;
 		else {
-			return result.substring(0, result.length() - 3) + "." + result.substring(result.length() - 2);
+			return result.substring(0, result.length() - 2) + "." + result.substring(result.length() - 2);
 		}
 	}
 	

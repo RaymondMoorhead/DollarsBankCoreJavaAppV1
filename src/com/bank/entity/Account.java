@@ -1,7 +1,6 @@
 package com.bank.entity;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -57,7 +56,7 @@ public class Account {
 	}
 	
 	public boolean correctPassword(String password) {
-		return this.password.equals(Encrypt.encrypt(password));
+		return this.password.equals(Encrypt.encrypt(password, userId));
 	}
 	
 	public Account(String userId, String password, String name, String address, String contactNumber, long balance, List<String> transactions) {
@@ -77,6 +76,7 @@ public class Account {
 	
 	public Account() {
 		super();
+		transactions = new ArrayList<String>();
 	}
 
 	public String getUserId() {
@@ -92,7 +92,7 @@ public class Account {
 	}
 
 	public void setPassword(String password) {
-		this.password = Encrypt.encrypt(password);
+		this.password = Encrypt.encrypt(password, userId);
 	}
 
 	public String getName() {
@@ -127,17 +127,24 @@ public class Account {
 	}
 
 	public void addAmount(long amount, String message) {
-		transactions.add("Added " + ConsoleExtras.parseAmount(amount) + " (" + message + ") [" + ConsoleExtras.getTime() + "]");
+		addTransaction("Added " + ConsoleExtras.parseAmount(amount) + " (" + message + ") [" + ConsoleExtras.getTime() + "]");
+		
 		this.balance += amount;
 	}
 	
 	public void subtractAmount(long amount, String message) {
-		transactions.add("Removed " + ConsoleExtras.parseAmount(amount) + " (" + message + ") [" + ConsoleExtras.getTime() + "]");
+		addTransaction("Removed " + ConsoleExtras.parseAmount(amount) + " (" + message + ") [" + ConsoleExtras.getTime() + "]");
 		this.balance -= amount;
 	}
 	
 	public List<String> getTransactions() {
 		return transactions;
+	}
+	
+	private void addTransaction(String msg) {
+		if(transactions.size() == 5)
+			transactions.remove(0);
+		transactions.add(msg);
 	}
 	
 	static {

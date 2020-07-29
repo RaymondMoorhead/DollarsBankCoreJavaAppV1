@@ -33,16 +33,16 @@ public class LoginState extends State{
 		switch(subState) {
 			case 0:
 				System.out.println("User Id:" + ConsoleExtras.ANSI_GREEN);
-				if(input.hasNext()) {
-					id = input.next();
+				if(input.hasNextLine()) {
+					id = input.nextLine();
 					++subState;
 				}
 				System.out.print(ConsoleExtras.ANSI_RESET);
 				break;
 			case 1:
 				System.out.println("Password:" + ConsoleExtras.ANSI_GREEN);
-				if(input.hasNext()) {
-					password = input.next();
+				if(input.hasNextLine()) {
+					password = input.nextLine();
 					Account acc = DollarsBankDao.getAccount(id, password);
 					if(acc != null)
 						this.controller.changeState("WelcomeCustomerState", acc);

@@ -9,8 +9,6 @@ import com.bank.flow.State;
 public class DepositState extends State {
 	Scanner input;
 	Account acc;
-	int subState;
-	long amount;
 
 	public DepositState() {
 		super("DepositState");
@@ -24,7 +22,6 @@ public class DepositState extends State {
 		System.out.println("+----------------------+");
 		input = new Scanner(System.in);
 		acc = (Account) obj;
-		subState = 0;
 	}
 
 	@Override
@@ -32,8 +29,10 @@ public class DepositState extends State {
 		System.out.println("Amount:" + ConsoleExtras.ANSI_GREEN);
 		if(input.hasNext()) {
 			String num = input.next();
-			if(ConsoleExtras.validAmount(num))
+			if(ConsoleExtras.validAmount(num)) {
 				DollarsBankDao.deposit(acc, ConsoleExtras.parseAmount(num));
+				this.controller.changeState("WelcomeCustomerState", acc);
+			}
 			else
 				System.out.println(ConsoleExtras.ANSI_RED + "Please Enter A Valid Amount");
 		}

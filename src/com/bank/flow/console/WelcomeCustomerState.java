@@ -18,16 +18,7 @@ public class WelcomeCustomerState extends State{
 	@Override
 	public void start(Object acc) {
 		this.acc = (Account) acc;
-		System.out.println();
-		System.out.println("+---------------------+");
-		System.out.println("| WELCOME Customer!!! |");
-		System.out.println("+---------------------+");
-		System.out.println("1. Deposite Amount");
-		System.out.println("2. Withdraw Amount");
-		System.out.println("3. Funds Transfer");
-		System.out.println("4. View 5 Recent Transactions");
-		System.out.println("5. Display Customer Information");
-		System.out.println("6. Sign Out");
+		printHeaderText();
 		input = new Scanner(System.in);
 	}
 
@@ -35,13 +26,18 @@ public class WelcomeCustomerState extends State{
 	public void run() {
 		System.out.println(ConsoleExtras.ANSI_GREEN + "\nEnter Choice (1,2,3,4,5 or 6) :" + ConsoleExtras.ANSI_RESET);
 		if(input.hasNextInt()) {
-			switch(input.nextInt()) {
+			int temp = input.nextInt();
+			input.nextLine();
+			switch(temp) {
 			case 1:
 				this.controller.changeState("DepositState", acc);
+				break;
 			case 2:
 				this.controller.changeState("WithdrawState", acc);
+				break;
 			case 3:
 				this.controller.changeState("TransferState", acc);
+				break;
 			case 4:
 				List<String> recent = acc.getTransactions();
 				System.out.println();
@@ -51,6 +47,10 @@ public class WelcomeCustomerState extends State{
 				for(String str : recent)
 					System.out.println(str.toString());
 				System.out.println("Balance - " + ConsoleExtras.parseAmount(acc.getBalance()) + " as on " + ConsoleExtras.getTime());
+				System.out.println(ConsoleExtras.ANSI_YELLOW + "Press Enter To Continue" + ConsoleExtras.ANSI_RESET);
+				input.nextLine();
+				printHeaderText();
+				break;
 			case 5:
 				System.out.println();
 				System.out.println("+-----------------------+");
@@ -59,6 +59,10 @@ public class WelcomeCustomerState extends State{
 				System.out.println("Name: " + acc.getName());
 				System.out.println("Address: " + acc.getAddress());
 				System.out.println("Contact Number: " + acc.getContactNumber());
+				System.out.println(ConsoleExtras.ANSI_YELLOW + "Press Enter To Continue" + ConsoleExtras.ANSI_RESET);
+				input.nextLine();
+				printHeaderText();
+				break;
 			case 6:
 				this.controller.changeState("WelcomeState");
 				break;
@@ -72,5 +76,18 @@ public class WelcomeCustomerState extends State{
 	public void stop() {
 		input = null;
 		acc = null;
+	}
+	
+	private void printHeaderText() {
+		System.out.println();
+		System.out.println("+---------------------+");
+		System.out.println("| WELCOME Customer!!! |");
+		System.out.println("+---------------------+");
+		System.out.println("1. Deposite Amount");
+		System.out.println("2. Withdraw Amount");
+		System.out.println("3. Funds Transfer");
+		System.out.println("4. View 5 Recent Transactions");
+		System.out.println("5. Display Customer Information");
+		System.out.println("6. Sign Out");
 	}
 }

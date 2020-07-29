@@ -31,8 +31,10 @@ public class WelcomeState extends State{
 			switch(input.nextInt()) {
 			case 1:
 				this.controller.changeState("NewAccountState");
+				break;
 			case 2:
 				this.controller.changeState("LoginState");
+				break;
 			case 3:
 				this.controller.shutdown();
 				System.out.println("Goodbye");
